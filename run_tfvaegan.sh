@@ -15,7 +15,7 @@ python train_tfvaegan.py \
 --classifier_lr 0.001 \
 --lambda1 10 \
 --critic_iter 5 \
---dataroot ../data \
+--dataroot ../xlsa17/data \
 --dataset CUB \
 --nclass_all 200 \
 --batch_size 64 \

@@ -4,6 +4,10 @@ import scipy.io as sio
 import torch
 from sklearn import preprocessing
 
+import requests, zipfile
+from io import BytesIO
+import os
+
 def weights_init(m):
     classname = m.__class__.__name__
     if classname.find('Linear') != -1:
@@ -21,6 +25,16 @@ def map_label(label, classes):
 
     return mapped_label
 
+def download_data():
+    print('Downloading datasets...')
+    url = 'http://datasets.d2.mpi-inf.mpg.de/xian/xlsa17.zip'
+    req = requests.get(url, verify=False)
+    print('Downloading datasets has completed!')
+    print('Extracting datasets...')
+    zipfilee = zipfile.ZipFile(BytesIO(req.content))
+    zipfilee.extractall(os.path.abspath(os.path.join(os.getcwd(), os.pardir)))
+    print('Extracting datasets has completed!')
+
 class DATA_LOADER(object):
     def __init__(self, opt):
         self.read_matdataset(opt)
@@ -28,6 +42,7 @@ class DATA_LOADER(object):
         self.epochs_completed = 0
 
     def read_matdataset(self, opt):
+        download_data()
         matcontent = sio.loadmat(opt.dataroot + "/" + opt.dataset + "/" + opt.image_embedding + ".mat")
         feature = matcontent['features'].T
         label = matcontent['labels'].astype(int).squeeze() - 1
