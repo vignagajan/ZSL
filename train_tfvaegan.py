@@ -8,6 +8,9 @@ import torch.optim as optim
 import torch.backends.cudnn as cudnn
 from torch.autograd import Variable
 
+import warnings
+warnings.filterwarnings("ignore")
+
 #import functions
 import models.tfvaegan as model
 import dataloaders.tfvaegan as util

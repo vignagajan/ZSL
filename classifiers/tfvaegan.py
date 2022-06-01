@@ -1,11 +1,13 @@
 #author: akshitac8
+
 import torch
 import torch.nn as nn
 from torch.autograd import Variable
 import torch.optim as optim
 import numpy as np
-from ..dataloaders import tfvaegan as util
 import copy
+
+from dataloaders import tfvaegan as util
 
 
 class CLASSIFIER:
@@ -76,7 +78,7 @@ class CLASSIFIER:
                 labelv = Variable(self.label)
                 output = self.model(inputv)
                 loss = self.criterion(output, labelv)
-                mean_loss += loss.data[0]
+                mean_loss += loss.data
                 loss.backward()
                 self.optimizer.step()
                 #print('Training classifier loss= ', loss.data[0])
